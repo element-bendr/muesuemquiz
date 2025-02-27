@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Museum Quiz</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="rules-header">
+        <h2>Quiz Rules</h2>
+        <ul>
+            <li>You have 10 seconds to choose an answer</li>
+            <li>If you don't answer in time, it will move to the next question</li>
+            <li>Three consecutive unanswered questions will restart the quiz</li>
+        </ul>
+    </div>
+    <div class="quiz-container">
+        <header>
+            <h1>Museum Quiz</h1>
+            <div class="timer">
+                <span id="time">30</span>s
+            </div>
+        </header>
+        <main>
+            <div class="question-container">
+                <h2 id="question">Loading...</h2>
+                <div class="options-container" id="options">
+                    <!-- Options will be inserted here -->
+                </div>
+            </div>
+            <div class="progress">
+                Question <span id="current-question">0</span> of <span id="total-questions">10</span>
+            </div>
+        </main>
+        <div id="results" class="results hidden">
+            <h2>Quiz Complete!</h2>
+            <p>Your score: <span id="score">0</span>/10</p>
+            <div id="review" class="review-section"></div>
+            <button id="restart" class="btn">Restart Quiz</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
