@@ -1,0 +1,8 @@
+*.jpeg
+*.png
+*.jpg
+node_modules/
+.git/
+.env
+*.lock
+*.log

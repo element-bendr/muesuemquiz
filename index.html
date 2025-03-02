@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Museum Quiz</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="main-container">
+        <aside class="rules-sidebar">
+            <div class="rules-header">
+                <h2>Quiz Rules</h2>
+                <ul>
+                    <li>You have 10 seconds per question</li>
+                    <li>Missing 3 questions in a row will restart the quiz</li>
+                    <li>Click an option to submit your answer</li>
+                    <li>No going back to previous questions</li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="quiz-area">
+            <section id="start-screen" class="start-screen">
+                <h1>Metamorphosis Exhibition</h1>
+                <p class="quiz-description">
+                    Test your knowledge about the artworks and artifacts in our Metamorphosis Exhibition.
+                </p>
+                <button id="start-btn" class="start-btn">Start Quiz</button>
+            </section>
+
+            <section id="quiz-section" class="quiz-section hidden">
+                <div class="quiz-content">
+                    <div class="header-content">
+                        <div class="question-progress">
+                            <h2>Question <span id="current-question">1</span>/<span id="total-questions">10</span></h2>
+                            <div class="progress-bar">
+                                <div class="progress-fill"></div>
+                            </div>
+                        </div>
+                        <div class="timer">Time: <span id="time">10</span>s</div>
+                    </div>
+                    <div id="question"></div>
+                    <div id="options"></div>
+                </div>
+            </section>
+
+            <section id="results" class="results hidden">
+                <h2>Quiz Complete!</h2>
+                <p>You scored <span id="score">0</span> out of 10</p>
+                <div id="review" class="review-section"></div>
+                <button id="restart" class="restart-btn">Try Again</button>
+            </section>
+
+            <section id="restart-screen" class="restart-screen hidden">
+                <p class="restart-message">Would you like to try again?</p>
+                <button id="return-to-start" class="restart-btn">Return to Start</button>
+            </section>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
