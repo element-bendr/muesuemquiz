@@ -8,15 +8,20 @@ class QuizGame {
         this.unansweredCount = 0;
         this.wrongAnswers = [];
         this.isTransitioning = false;
+        this.currentLanguage = 'en';
 
         // DOM elements
+        // Language selectors
+        this.selectEnBtn = document.getElementById('select-en');
+        this.selectMrBtn = document.getElementById('select-mr');
         this.mainContainer = document.querySelector('.main-container');
         this.rulesSidebar = document.querySelector('.rules-sidebar');
         this.startScreen = document.getElementById('start-screen');
         this.quizSection = document.getElementById('quiz-section');
         this.questionEl = document.getElementById('question');
         this.optionsEl = document.getElementById('options');
-        this.timerEl = document.getElementById('time');
+        this.timerEl = document.getElementById('timer');
+        this.timeSpan = document.getElementById('time');
         this.resultsEl = document.getElementById('results');
         this.scoreEl = document.getElementById('score');
         this.startBtn = document.getElementById('start-btn');
@@ -27,178 +32,396 @@ class QuizGame {
         this.currentQuestionEl = document.getElementById('current-question');
 
         // Event listeners
+        // Event listeners
+        this.selectEnBtn.addEventListener('click', () => this.selectLanguage('en'));
+        this.selectMrBtn.addEventListener('click', () => this.selectLanguage('mr'));
         this.startBtn.addEventListener('click', () => this.initializeQuiz());
         this.restartBtn.addEventListener('click', () => this.showRestartScreen());
         this.returnToStartBtn.addEventListener('click', () => this.returnToStart());
 
         this.loadQuestions();
+        this.initializeTranslations();
+    }
+
+    initializeTranslations() {
+        document.querySelectorAll('.translate-text').forEach(element => {
+            this.updateElementText(element);
+        });
+    }
+
+    selectLanguage(lang) {
+        this.currentLanguage = lang;
+        
+        // Update button styles
+        this.selectEnBtn.classList.toggle('selected', lang === 'en');
+        this.selectMrBtn.classList.toggle('selected', lang === 'mr');
+        
+        // Show start button after language selection
+        this.startBtn.classList.remove('hidden');
+        
+        // Update all translations
+        document.querySelectorAll('.translate-text').forEach(element => {
+            this.updateElementText(element);
+        });
+    }
+
+    updateElementText(element) {
+        const text = element.getAttribute(`data-${this.currentLanguage}`);
+        if (text) {
+            element.textContent = text;
+        }
     }
 
     loadQuestions() {
         this.questions = [
             {
                 id: 1,
-                category: "Art Object: Darshan Dwar Phulkari",
-                image: "WhatsApp Image 2025-02-21 at 12.48.30 PM.jpeg",
-                question: "What is the name of this traditional embroidered textile from Punjab?",
-                options: ["Kalamkari", "Phulkari", "Madhubani", "Warli"],
+                category: {
+                    en: "Art Object: Darshan Dwar Phulkari",
+                    mr: "कला वस्तू: दर्शन द्वार फुलकारी"
+                },
+                image: "images/Darshan Dwar Phulkari.jpg",
+                question: {
+                    en: "What is the name of this traditional embroidered textile from Punjab?",
+                    mr: "पंजाबमधील पारंपरिक भरतकाम असलेल्या या वस्त्राचे नाव काय आहे?"
+                },
+                options: {
+                    en: ["Kalamkari", "Phulkari", "Madhubani", "Warli"],
+                    mr: ["कलमकारी", "फुलकारी", "मधुबनी", "वारली"]
+                },
                 correctAnswer: 1
             },
             {
                 id: 2,
-                category: "Art Object: Darshan Dwar Phulkari",
-                image: "WhatsApp Image 2025-02-21 at 12.48.30 PM.jpeg",
-                question: "What is the main embroidery technique used in Phulkari?",
-                options: ["Block Printing", "Weaving", "Thread Embroidery", "Appliqué Work"],
+                category: {
+                    en: "Art Object: Darshan Dwar Phulkari",
+                    mr: "कला वस्तू: दर्शन द्वार फुलकारी"
+                },
+                image: "images/Darshan Dwar Phulkari.jpg",
+                question: {
+                    en: "What is the main embroidery technique used in Phulkari?",
+                    mr: "फुलकारीमध्ये कोणती मुख्य भरतकाम तंत्र वापरले जाते?"
+                },
+                options: {
+                    en: ["Block Printing", "Weaving", "Thread Embroidery", "Appliqué Work"],
+                    mr: ["ब्लॉक प्रिंटिंग", "वीविंग", "दोर्‍याने भरतकाम", "अप्लिक वर्क"]
+                },
                 correctAnswer: 2
             },
             {
                 id: 3,
-                category: "Depiction of Ramayana",
-                image: "WhatsApp Image 2025-02-21 at 12.48.31 PM.jpeg",
-                question: "Which Indian epic is shown in this Kantha embroidery?",
-                options: ["Ramayana", "Mahabharata", "Jataka Tales", "Panchatantra"],
+                category: {
+                    en: "Depiction of Ramayana",
+                    mr: "रामायणाचे चित्रण"
+                },
+                image: "images/Depiction of Ramayana.jpg",
+                question: {
+                    en: "Which Indian epic is shown in this Kantha embroidery?",
+                    mr: "या कांथा भरतकामात कोणते भारतीय महाकाव्य दर्शवले आहे?"
+                },
+                options: {
+                    en: ["Ramayana", "Mahabharata", "Jataka Tales", "Panchatantra"],
+                    mr: ["रामायण", "महाभारत", "जातक कथा", "पंचतंत्र"]
+                },
                 correctAnswer: 0
             },
             {
                 id: 4,
-                category: "Depiction of Ramayana",
-                image: "WhatsApp Image 2025-02-21 at 12.48.31 PM.jpeg",
-                question: "Which main character is performing Durga Puja in the center of this Kantha embroidery?",
-                options: ["Hanuman", "Ravana", "Rama", "Lakshmana"],
+                category: {
+                    en: "Depiction of Ramayana",
+                    mr: "रामायणाचे चित्रण"
+                },
+                image: "images/Depiction of Ramayana.jpg",
+                question: {
+                    en: "Which main character is performing Durga Puja in the center of this Kantha embroidery?",
+                    mr: "या कांथा भरतकामाच्या केंद्रस्थानी कोणता प्रमुख पात्र दुर्गा पूजन करत आहे?"
+                },
+                options: {
+                    en: ["Hanuman", "Ravana", "Rama", "Lakshmana"],
+                    mr: ["हनुमान", "रावण", "राम", "लक्ष्मण"]
+                },
                 correctAnswer: 2
             },
             {
                 id: 5,
-                category: "Depiction of Ramayana",
-                image: "WhatsApp Image 2025-02-21 at 12.48.31 PM.jpeg",
-                question: "Can you count how many different scenes are depicted in this beautiful artwork?",
-                options: ["30", "45", "55", "60"],
+                category: {
+                    en: "Depiction of Ramayana",
+                    mr: "रामायणाचे चित्रण"
+                },
+                image: "images/Depiction of Ramayana.jpg",
+                question: {
+                    en: "Can you count how many different scenes are depicted in this beautiful artwork?",
+                    mr: "या सुंदर कलाकृतीत किती वेगवेगळे दृश्ये दाखवली आहेत?"
+                },
+                options: {
+                    en: ["30", "45", "55", "60"],
+                    mr: ["३०", "४५", "५५", "६०"]
+                },
                 correctAnswer: 3
             },
             {
                 id: 6,
-                category: "Navagunjara Patachitra",
-                image: "WhatsApp Image 2025-02-21 at 12.48.31 PM (2).jpeg",
-                question: "Which of the following animals is NOT a part of the Navagunjara?",
-                options: ["Peacock", "Elephant", "Lion", "Snake"],
+                category: {
+                    en: "Navagunjara Patachitra",
+                    mr: "नवगुंजर पटचित्र"
+                },
+                image: "images/Navagunjara Patachitra.jpg",
+                question: {
+                    en: "Which of the following animals is NOT a part of the Navagunjara?",
+                    mr: "खालीलपैकी कोणते प्राणी नवगुंजर चा भाग नाही?"
+                },
+                options: {
+                    en: ["Peacock", "Elephant", "Lion", "Snake"],
+                    mr: ["मोर", "हत्ती", "सिंह", "साप"]
+                },
                 correctAnswer: 2
             },
             {
                 id: 7,
-                category: "Navagunjara Patachitra",
-                image: "WhatsApp Image 2025-02-21 at 12.48.31 PM (2).jpeg",
-                question: "The Navagunjara art form belongs to which Indian state?",
-                options: ["Rajasthan", "Odisha", "Tamil Nadu", "West Bengal"],
+                category: {
+                    en: "Navagunjara Patachitra",
+                    mr: "नवगुंजर पटचित्र"
+                },
+                image: "images/Navagunjara Patachitra.jpg",
+                question: {
+                    en: "The Navagunjara art form belongs to which Indian state?",
+                    mr: "नवगुंजर कला कोणत्या भारतीय राज्याशी संबंधित आहे?"
+                },
+                options: {
+                    en: ["Rajasthan", "Odisha", "Tamil Nadu", "West Bengal"],
+                    mr: ["राजस्थान", "ओडिशा", "तामिळनाडू", "पश्चिम बंगाल"]
+                },
                 correctAnswer: 1
             },
             {
                 id: 8,
-                category: "Navagunjara Patachitra",
-                image: "WhatsApp Image 2025-02-21 at 12.48.31 PM (2).jpeg",
-                question: "What is Navagunjara holding in its hand?",
-                options: ["A bow and arrow", "A lotus flower", "A chakra", "A conch shell"],
+                category: {
+                    en: "Navagunjara Patachitra",
+                    mr: "नवगुंजर पटचित्र"
+                },
+                image: "images/Navagunjara Patachitra.jpg",
+                question: {
+                    en: "What is Navagunjara holding in its hand?",
+                    mr: "नवगुंजर आपल्या हातात काय धरून आहे?"
+                },
+                options: {
+                    en: ["A bow and arrow", "A lotus flower", "A chakra", "A conch shell"],
+                    mr: ["धनुष्य आणि बाण", "कमळ फूल", "चक्र", "शंख"]
+                },
                 correctAnswer: 2
             },
             {
                 id: 9,
-                category: "Navagunjara Patachitra",
-                image: "WhatsApp Image 2025-02-21 at 12.48.31 PM (2).jpeg",
-                question: "Can you match the correct animal parts to their respective positions from left to right in the figure?",
-                options: [
-                    "Peacock, Snake, Bull, Elephant, Human Hand, Deer, Tiger",
-                    "Elephant, Peacock, Bull, Snake, Tiger, Deer, Human Hand",
-                    "Bull, Snake, Peacock, Elephant, Human Hand, Tiger, Deer",
-                    "Tiger, Human Hand, Peacock, Snake, Bull, Deer, Elephant"
-                ],
+                category: {
+                    en: "Navagunjara Patachitra",
+                    mr: "नवगुंजर पटचित्र"
+                },
+                image: "images/Navagunjara Patachitra.jpg",
+                question: {
+                    en: "Can you match the correct animal parts to their respective positions from left to right in the figure?",
+                    mr: "चित्रातील डावीकडून उजवीकडे योग्य प्राणी अवयव जुळवा."
+                },
+                options: {
+                    en: [
+                        "Peacock, Snake, Bull, Elephant, Human Hand, Deer, Tiger",
+                        "Elephant, Peacock, Bull, Snake, Tiger, Deer, Human Hand",
+                        "Bull, Snake, Peacock, Elephant, Human Hand, Tiger, Deer",
+                        "Tiger, Human Hand, Peacock, Snake, Bull, Deer, Elephant"
+                    ],
+                    mr: [
+                        "मोर, साप, बैल, हत्ती, मानवी हात, हरण, वाघ",
+                        "हत्ती, मोर, बैल, साप, वाघ, हरण, मानवी हात",
+                        "बैल, साप, मोर, हत्ती, मानवी हात, वाघ, हरण",
+                        "वाघ, मानवी हात, मोर, साप, बैल, हरण, हत्ती"
+                    ]
+                },
                 correctAnswer: 0
             },
             {
                 id: 10,
-                category: "Hanuman Dancing Mask",
-                image: "image4.png",
-                question: "What is the Sahi Jata festival of Puri known for?",
-                options: ["Playing musical instruments", "Telling stories through dance", "Cooking traditional food", "Flying kites"],
+                category: {
+                    en: "Hanuman Dancing Mask",
+                    mr: "हनुमान नृत्य मुखवटा"
+                },
+                image: "images/Hanuman Dancing Mask.png",
+                question: {
+                    en: "What is the Sahi Jata festival of Puri known for?",
+                    mr: "पुरी येथील साही जाता उत्सव कशासाठी प्रसिद्ध आहे?"
+                },
+                options: {
+                    en: ["Playing musical instruments", "Telling stories through dance", "Cooking traditional food", "Flying kites"],
+                    mr: ["वाद्ये वाजवण्यासाठी", "नृत्याद्वारे कथा सांगण्यासाठी", "पारंपरिक जेवण बनवण्यासाठी", "पतंग उडवण्यासाठी"]
+                },
                 correctAnswer: 1
             },
             {
                 id: 11,
-                category: "Hanuman Dancing Mask",
-                image: "image4.png",
-                question: "What is the main color traditionally used in Sahi Jata face masks?",
-                options: ["Blue", "Red", "Yellow", "Green"],
+                category: {
+                    en: "Hanuman Dancing Mask",
+                    mr: "हनुमान नृत्य मुखवटा"
+                },
+                image: "images/Hanuman Dancing Mask.png",
+                question: {
+                    en: "What is the main color traditionally used in Sahi Jata face masks?",
+                    mr: "साही जाता मुखवट्यांसाठी पारंपरिक रंग कोणता आहे?"
+                },
+                options: {
+                    en: ["Blue", "Red", "Yellow", "Green"],
+                    mr: ["निळा", "लाल", "पिवळा", "हिरवा"]
+                },
                 correctAnswer: 1
             },
             {
                 id: 12,
-                category: "Mumbai Lifestyle",
-                image: "image5.png",
-                question: "How many autos and cars can you count in the 'Mumbai Lifestyle'- Warli painting?",
-                options: ["3 & 5", "1 & 7", "2 & 10", "1 & 10"],
+                category: {
+                    en: "Mumbai Lifestyle",
+                    mr: "मुंबई जीवनशैली"
+                },
+                image: "images/Mumbai Lifestyle.png",
+                question: {
+                    en: "How many autos and cars can you count in the 'Mumbai Lifestyle'- Warli painting?",
+                    mr: "मुंबई जीवनशैली या वारली चित्रामध्ये तुम्हाला किती रिक्षा आणि गाड्या दिसतात?"
+                },
+                options: {
+                    en: ["3 & 5", "1 & 7", "2 & 10", "1 & 10"],
+                    mr: ["३ व ५", "१ व ७", "२ व १०", "१ व १०"]
+                },
                 correctAnswer: 1
             },
             {
                 id: 13,
-                category: "Mumbai Lifestyle",
-                image: "image5.png",
-                question: "In the \"Mumbai Lifestyle\" Warli painting by artist Kiran Vinayak Gorwala, which modes of transportation are depicted?",
-                options: ["Road, rail and sea.", "Road & rail", "Road, rail, sea, air", "Road"],
+                category: {
+                    en: "Mumbai Lifestyle",
+                    mr: "मुंबई जीवनशैली"
+                },
+                image: "images/Mumbai Lifestyle.png",
+                question: {
+                    en: "In the \"Mumbai Lifestyle\" Warli painting by artist Kiran Vinayak Gorwala, which modes of transportation are depicted?",
+                    mr: "कलाकार किरण विनायक गोरवाला यांच्या मुंबई जीवनशैली वारली चित्रकलेमध्ये कोणत्या वाहतूक साधनांचे चित्रण आहे?"
+                },
+                options: {
+                    en: ["Road, rail and sea.", "Road & rail", "Road, rail, sea, air", "Road"],
+                    mr: ["रस्ता, रेल्वे आणि समुद्र", "रस्ता आणि रेल्वे", "रस्ता, रेल्वे, समुद्र, हवाई", "फक्त रस्ता"]
+                },
                 correctAnswer: 2
             },
             {
                 id: 14,
-                category: "Jumadi Bhuta Mask",
-                image: "image6.png",
-                question: "This is a traditional mask used in rituals and performances. Can you guess which spirit deity it represents?",
-                options: ["Hanuman", "Jumadi Bhuta", "Ganesha", "Kali"],
+                category: {
+                    en: "Jumadi Bhuta Mask",
+                    mr: "जुमाडी भुता मुखवटा"
+                },
+                image: "images/Jumadi Bhuta Mask.png",
+                question: {
+                    en: "This is a traditional mask used in rituals and performances. Can you guess which spirit deity it represents?",
+                    mr: "हा पारंपरिक मुखवटा कोणत्या देवतेचे प्रतिनिधित्व करतो?"
+                },
+                options: {
+                    en: ["Hanuman", "Jumadi Bhuta", "Ganesha", "Kali"],
+                    mr: ["हनुमान", "जुमाडी भुता", "गणेश", "काली"]
+                },
                 correctAnswer: 1
             },
             {
                 id: 15,
-                category: "Jumadi Bhuta Mask",
-                image: "image6.png",
-                question: "Can you count the number of cobra (snake) faces shown on the headgear of the Jumadi Bhuta mask?",
-                options: ["9", "8", "7", "None"],
+                category: {
+                    en: "Jumadi Bhuta Mask",
+                    mr: "जुमाडी भुता मुखवटा"
+                },
+                image: "images/Jumadi Bhuta Mask.png",
+                question: {
+                    en: "Can you count the number of cobra (snake) faces shown on the headgear of the Jumadi Bhuta mask?",
+                    mr: "जुमाडी भुता मुखवट्याच्या मुकुटावर किती नागाचे चेहरे आहेत?"
+                },
+                options: {
+                    en: ["9", "8", "7", "None"],
+                    mr: ["९", "८", "७", "एकही नाही"]
+                },
                 correctAnswer: 0
             },
             {
                 id: 16,
-                category: "Jumadi Bhuta Mask",
-                image: "image6.png",
-                question: "Where Jumadi Bhuta masks mainly belong to?",
-                options: ["Rajasthan & Gujarat", "Karnataka & Kerala", "Tamil Nadu & Andhra Pradesh", "West Bengal & Odisha"],
+                category: {
+                    en: "Jumadi Bhuta Mask",
+                    mr: "जुमाडी भुता मुखवटा"
+                },
+                image: "images/Jumadi Bhuta Mask.png",
+                question: {
+                    en: "Where do Jumadi Bhuta masks mainly belong to?",
+                    mr: "जुमाडी भुता मुखवटे प्रामुख्याने कोणत्या राज्यांत आढळतात?"
+                },
+                options: {
+                    en: ["Rajasthan & Gujarat", "Karnataka & Kerala", "Tamil Nadu & Andhra Pradesh", "West Bengal & Odisha"],
+                    mr: ["राजस्थान आणि गुजरात", "कर्नाटक आणि केरळ", "तामिळनाडू आणि आंध्र प्रदेश", "पश्चिम बंगाल आणि ओडिशा"]
+                },
                 correctAnswer: 1
             },
             {
                 id: 17,
-                category: "Jumadi Bhuta Mask",
-                image: "image6.png",
-                question: "What is a distinctive feature often found on Jumadi Bhuta masks?",
-                options: ["Cobra hoods", "Peacock feathers", "Tiger stripes", "Elephant tusks"],
+                category: {
+                    en: "Jumadi Bhuta Mask",
+                    mr: "जुमाडी भुता मुखवटा"
+                },
+                image: "images/Jumadi Bhuta Mask.png",
+                question: {
+                    en: "What is a distinctive feature often found on Jumadi Bhuta masks?",
+                    mr: "जुमाडी भुता मुखवट्याची खास वैशिष्ट्ये कोणती आहेत?"
+                },
+                options: {
+                    en: ["Cobra hoods", "Peacock feathers", "Tiger stripes", "Elephant tusks"],
+                    mr: ["नागफण", "मोरपीस", "वाघाच्या रेघा", "हत्तीचे सुळे"]
+                },
                 correctAnswer: 0
             },
             {
                 id: 18,
-                category: "Jumadi Bhuta Mask",
-                image: "image6.png",
-                question: "Which material is traditionally used to make bhuta masks?",
-                options: ["Wood", "Paper", "Metal", "Bone"],
+                category: {
+                    en: "Jumadi Bhuta Mask",
+                    mr: "जुमाडी भुता मुखवटा"
+                },
+                image: "images/Jumadi Bhuta Mask.png",
+                question: {
+                    en: "Which material is traditionally used to make bhuta masks?",
+                    mr: "भुता मुखवटे बनवण्यासाठी पारंपरिकरित्या कोणती सामग्री वापरली जाते?"
+                },
+                options: {
+                    en: ["Wood", "Paper", "Metal", "Bone"],
+                    mr: ["लाकूड", "कागद", "धातू", "हाडे"]
+                },
                 correctAnswer: 2
             },
             {
                 id: 19,
-                category: "Tree of Life",
-                image: "image7.png",
-                question: "\"The Tree of Life\" -- art work from Ahmedabad (Gujarat) is an important symbol in many tribal and folk art forms. What does it usually represent?",
-                options: ["A place for birds to sit", "The connection between nature and life", "A giant umbrella", "A magic tree that grants wishes"],
+                category: {
+                    en: "Tree of Life",
+                    mr: "जीवन वृक्ष"
+                },
+                image: "images/Tree of Life.png",
+                question: {
+                    en: "\"The Tree of Life\" -- art work from Ahmedabad (Gujarat) is an important symbol in many tribal and folk art forms. What does it usually represent?",
+                    mr: "अहमदाबाद (गुजरात) येथील जीवन वृक्ष कलाकृती अनेक आदिवासी आणि लोककलांमध्ये एक महत्त्वपूर्ण प्रतीक आहे. त्याचे सामान्यतः काय प्रतिनिधित्व करते?"
+                },
+                options: {
+                    en: ["A place for birds to sit", "The connection between nature and life", "A giant umbrella", "A magic tree that grants wishes"],
+                    mr: ["पक्ष्यांसाठी बसण्याची जागा", "निसर्ग आणि जीवन यांचा संबंध", "एक विशाल छत्री", "इच्छा पूर्ण करणारे जादुई झाड"]
+                },
                 correctAnswer: 1
             },
             {
                 id: 20,
-                category: "Tree of Life",
-                image: "image7.png",
-                question: "Look closely at the \"Tree of Life\" artwork. How many pairs of green colour branches can you count in the tree?",
-                options: ["4 pairs", "6 pairs", "5 pairs", "10 pairs"],
+                category: {
+                    en: "Tree of Life",
+                    mr: "जीवन वृक्ष"
+                },
+                image: "images/Tree of Life.png",
+                question: {
+                    en: "Look closely at the \"Tree of Life\" artwork. How many pairs of green colour branches can you count in the tree?",
+                    mr: "जीवन वृक्ष कलाकृती नीट पाहा. झाडावर हिरव्या रंगाच्या किती जोड्या फांद्या मोजू शकता?"
+                },
+                options: {
+                    en: ["4 pairs", "6 pairs", "5 pairs", "10 pairs"],
+                    mr: ["४ जोड्या", "६ जोड्या", "५ जोड्या", "१० जोड्या"]
+                },
                 correctAnswer: 2
             }
         ];
@@ -223,7 +446,7 @@ class QuizGame {
         this.score = 0;
         this.unansweredCount = 0;
         this.wrongAnswers = [];
-        this.selectedQuestions = this.getRandomQuestions(10); // Only 10 questions per quiz
+        this.selectedQuestions = this.getRandomQuestions(10);
         
         document.getElementById('total-questions').textContent = this.selectedQuestions.length;
         this.showQuestion();
@@ -235,55 +458,66 @@ class QuizGame {
             return;
         }
 
-        // Update progress bar
         const progress = ((this.currentQuestionIndex + 1) / this.selectedQuestions.length) * 100;
-        const progressBar = document.createElement('div');
-        progressBar.className = 'progress-bar';
-        progressBar.innerHTML = `<div class="progress-fill" style="width: ${progress}%"></div>`;
+        const progressBar = document.querySelector('.progress-bar');
+        const progressFill = progressBar.querySelector('.progress-fill') || document.createElement('div');
+        progressFill.className = 'progress-fill';
+        progressFill.style.width = `${progress}%`;
+        if (!progressFill.parentNode) {
+            progressBar.appendChild(progressFill);
+        }
         
-        // Update question counter
         this.currentQuestionEl.textContent = this.currentQuestionIndex + 1;
         
-        // Reset displays
         this.questionEl.style.opacity = '0';
         this.optionsEl.style.opacity = '0';
         this.quizContent.style.opacity = '0';
         
-        // Clear previous content
         this.questionEl.innerHTML = '';
         this.optionsEl.innerHTML = '';
         
         const question = this.selectedQuestions[this.currentQuestionIndex];
         
-        // Create main question container
         const mainContainer = document.createElement('div');
         mainContainer.className = 'question-main-container';
         
-        // Add image
         if (question.image) {
             const imgContainer = document.createElement('div');
             imgContainer.className = 'question-image-container';
             const img = document.createElement('img');
             img.src = question.image;
-            img.alt = question.category;
+            img.alt = typeof question.category === 'object' ? 
+                question.category[this.currentLanguage] : 
+                question.category;
             imgContainer.appendChild(img);
+
+            imgContainer.addEventListener('click', () => {
+                imgContainer.classList.toggle('enlarged');
+                if (imgContainer.classList.contains('enlarged')) {
+                    const closeHandler = (e) => {
+                        if (e.target === imgContainer) {
+                            imgContainer.classList.remove('enlarged');
+                            document.removeEventListener('click', closeHandler);
+                        }
+                    };
+                    document.addEventListener('click', closeHandler);
+                }
+            });
             mainContainer.appendChild(imgContainer);
         }
         
-        // Add question text
         const textContainer = document.createElement('div');
         textContainer.className = 'question-text';
-        textContainer.textContent = question.question;
+        textContainer.textContent = question.question[this.currentLanguage] || question.question;
         mainContainer.appendChild(textContainer);
         
-        // Add main container to question element
         this.questionEl.appendChild(mainContainer);
         
-        // Create and add options
         const optionsContainer = document.createElement('div');
         optionsContainer.className = 'options-grid';
         
-        question.options.forEach((option, index) => {
+        const options = question.options[this.currentLanguage] || question.options;
+        options.forEach((option, index) => {
             const button = document.createElement('button');
             button.textContent = option;
             button.className = 'option-btn';
@@ -298,7 +532,6 @@ class QuizGame {
         
         this.optionsEl.appendChild(optionsContainer);
 
-        // Show elements with animation
         requestAnimationFrame(() => {
             this.quizContent.style.opacity = '1';
             this.questionEl.style.opacity = '1';
@@ -314,7 +547,6 @@ class QuizGame {
             });
         });
 
-        // Start timer
         this.timeLeft = 10;
         this.updateTimerDisplay();
         if (this.timer) clearInterval(this.timer);
@@ -359,8 +591,8 @@ class QuizGame {
         this.questionEl.style.opacity = '0';
         this.optionsEl.style.opacity = '0';
         
-        if (this.timerEl.parentElement.hasAttribute('data-time')) {
-            this.timerEl.parentElement.removeAttribute('data-time');
+        if (this.timerEl && this.timerEl.hasAttribute('data-time')) {
+            this.timerEl.removeAttribute('data-time');
         }
         
         setTimeout(() => {
@@ -374,8 +606,8 @@ class QuizGame {
         this.timeLeft--;
         this.updateTimerDisplay();
         
-        if (this.timeLeft <= 3) {
-            this.timerEl.parentElement.setAttribute('data-time', 'low');
+        if (this.timeLeft <= 3 && this.timerEl) {
+            this.timerEl.setAttribute('data-time', 'low');
         }
         
         if (this.timeLeft <= 0) {
@@ -384,7 +616,9 @@ class QuizGame {
     }
 
     updateTimerDisplay() {
-        this.timerEl.textContent = this.timeLeft;
+        if (this.timeSpan) {
+            this.timeSpan.textContent = this.timeLeft;
+        }
     }
 
     handleTimeout() {
@@ -426,13 +660,18 @@ class QuizGame {
             this.rulesSidebar.classList.remove('hidden');
             this.mainContainer.classList.remove('expanded');
             
-            // Reset quiz state
             this.currentQuestionIndex = 0;
             this.score = 0;
             this.unansweredCount = 0;
             this.wrongAnswers = [];
             
-            // Show start screen with animation
+            // Reset language buttons
+            this.selectEnBtn.classList.remove('selected');
+            this.selectMrBtn.classList.remove('selected');
+            
+            // Hide start button until language is selected
+            this.startBtn.classList.add('hidden');
+            
             this.startScreen.style.opacity = '0';
             this.startScreen.classList.remove('hidden');
             requestAnimationFrame(() => {
@@ -444,18 +683,14 @@ class QuizGame {
     getRandomQuestions(count) {
         const available = [...this.questions];
         const selected = [];
-        
-        // Get a random subset of questions without repetition
         const shuffled = available.sort(() => 0.5 - Math.random());
         selected.push(...shuffled.slice(0, count));
-        
         return selected;
     }
 
     endQuiz() {
         if (this.timer) clearInterval(this.timer);
         
-        // Hide rules and expand main container
         this.rulesSidebar.classList.add('hidden');
         this.mainContainer.classList.add('expanded');
         
@@ -467,7 +702,9 @@ class QuizGame {
         reviewContainer.innerHTML = '';
 
         const header = document.createElement('h3');
-        header.textContent = this.wrongAnswers.length > 0 ? 'Questions to Review:' : 'Perfect Score! No Review Needed';
+        header.textContent = this.wrongAnswers.length > 0 ? 
+            (this.currentLanguage === 'mr' ? 'पुनरावलोकनासाठी प्रश्न:' : 'Questions to Review:') : 
+            (this.currentLanguage === 'mr' ? 'पूर्ण गुण! पुनरावलोकन आवश्यक नाही' : 'Perfect Score! No Review Needed');
         reviewContainer.appendChild(header);
 
         this.wrongAnswers.forEach((q, index) => {
@@ -475,9 +712,15 @@ class QuizGame {
             if (q.image) {
                 p.innerHTML = `<img src="${q.image}" alt="${q.category}" class="review-image"><br>`;
             }
-            p.innerHTML += `<strong>Q${index + 1}:</strong> ${q.question}<br>` +
-                          `<strong>Your Answer:</strong> ${q.selectedAnswer === null ? 'Time Out' : q.options[q.selectedAnswer]}<br>` +
-                          `<strong>Correct Answer:</strong> ${q.options[q.correctAnswer]}`;
+            const questionText = q.question[this.currentLanguage] || q.question;
+            const options = q.options[this.currentLanguage] || q.options;
+            const yourAnswer = q.selectedAnswer === null ? 
+                (this.currentLanguage === 'mr' ? 'वेळ संपली' : 'Time Out') : 
+                options[q.selectedAnswer];
+            
+            p.innerHTML += `<strong>${this.currentLanguage === 'mr' ? 'प्र' : 'Q'}${index + 1}:</strong> ${questionText}<br>` +
+                          `<strong>${this.currentLanguage === 'mr' ? 'तुमचे उत्तर' : 'Your Answer'}:</strong> ${yourAnswer}<br>` +
+                          `<strong>${this.currentLanguage === 'mr' ? 'योग्य उत्तर' : 'Correct Answer'}:</strong> ${options[q.correctAnswer]}`;
             p.style.opacity = '0';
             p.style.transform = 'translateY(20px)';
             reviewContainer.appendChild(p);
