@@ -7,38 +7,64 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="featured-image">
+        <img src="images/startingimage.jpeg" alt="Starting Image">
+    </div>
+    
+    <div class="slideshow-container">
+        <div class="slideshow-images"></div>
+    </div>
+
+    <div class="play-button-container">
+        <button id="lets-play-btn" class="play-button translate-text" data-en="Let's Play" data-mr="चला खेळूया">Let's Play</button>
+    </div>
+
     <div class="main-container">
         <aside class="rules-sidebar">
             <div class="rules-header">
-                <h2>Quiz Rules</h2>
+                <h2 class="translate-text" data-en="Quiz Rules" data-mr="क्विझ नियम">Quiz Rules</h2>
                 <ul>
-                    <li>You have 10 seconds per question</li>
-                    <li>Missing 3 questions in a row will restart the quiz</li>
-                    <li>Click an option to submit your answer</li>
-                    <li>No going back to previous questions</li>
+                    <li class="translate-text" data-en="You have 10 seconds per question" data-mr="प्रत्येक प्रश्नासाठी तुमच्याकडे 10 सेकंद आहेत">You have 10 seconds per question</li>
+                    <li class="translate-text" data-en="Missing 3 questions in a row will restart the quiz" data-mr="सलग 3 प्रश्न चुकल्यास क्विझ पुन्हा सुरू होईल">Missing 3 questions in a row will restart the quiz</li>
+                    <li class="translate-text" data-en="Click an option to submit your answer" data-mr="उत्तर सबमिट करण्यासाठी एका पर्यायावर क्लिक करा">Click an option to submit your answer</li>
+                    <li class="translate-text" data-en="No going back to previous questions" data-mr="मागील प्रश्नांकडे परत जाता येणार नाही">No going back to previous questions</li>
                 </ul>
             </div>
         </aside>
 
         <main class="quiz-area">
             <section id="start-screen" class="start-screen">
-                <h1>Metamorphosis Exhibition</h1>
-                <p class="quiz-description">
+                <h1 class="translate-text" data-en="Metamorphosis Exhibition" data-mr="मेटामॉर्फोसिस प्रदर्शन">Metamorphosis Exhibition</h1>
+                <h3 class="quiz-description translate-text" data-en="Test your knowledge about the artworks and artifacts in our Metamorphosis Exhibition." data-mr="आमच्या मेटामॉर्फोसिस प्रदर्शनातील कलाकृती आणि वस्तूंबद्दल तुमचे ज्ञान तपासा.">
                     Test your knowledge about the artworks and artifacts in our Metamorphosis Exhibition.
-                </p>
-                <button id="start-btn" class="start-btn">Start Quiz</button>
+                </h3>
+                <div class="language-selection">
+                    <p class="language-prompt">Select your preferred language / तुमची पसंतीची भाषा निवडा</p>
+                    <div class="language-buttons">
+                        <button id="select-en" class="lang-btn">English</button>
+                        <button id="select-mr" class="lang-btn">मराठी</button>
+                    </div>
+                </div>
+                <button id="start-btn" class="start-btn translate-text hidden" data-en="Start Quiz" data-mr="क्विझ सुरू करा">Start Quiz</button>
             </section>
 
             <section id="quiz-section" class="quiz-section hidden">
                 <div class="quiz-content">
                     <div class="header-content">
                         <div class="question-progress">
-                            <h2>Question <span id="current-question">1</span>/<span id="total-questions">10</span></h2>
+                            <h2><span class="translate-text" data-en="Question" data-mr="प्रश्न">Question</span> <span id="current-question">1</span>/<span id="total-questions">10</span></h2>
                             <div class="progress-bar">
                                 <div class="progress-fill"></div>
                             </div>
+                            <div class="progress-text">
+                                <span class="translate-text" data-en="Progress" data-mr="प्रगती">Progress</span>
+                            </div>
                         </div>
-                        <div class="timer">Time: <span id="time">10</span>s</div>
+                        <div class="timer" id="timer">
+                            <span class="translate-text" data-en="Time: " data-mr="वेळ: ">Time: </span>
+                            <span id="time">10</span>
+                            <span class="translate-text" data-en="s" data-mr="से">s</span>
+                        </div>
                     </div>
                     <div id="question"></div>
                     <div id="options"></div>
@@ -46,15 +72,15 @@
             </section>
 
             <section id="results" class="results hidden">
-                <h2>Quiz Complete!</h2>
-                <p>You scored <span id="score">0</span> out of 10</p>
+                <h2 class="translate-text" data-en="Quiz Complete!" data-mr="क्विझ पूर्ण झाले!">Quiz Complete!</h2>
+                <p class="translate-text" data-en="You scored" data-mr="तुमचे गुण">You scored <span id="score">0</span> <span class="translate-text" data-en="out of" data-mr="पैकी">out of</span> 10</p>
                 <div id="review" class="review-section"></div>
-                <button id="restart" class="restart-btn">Try Again</button>
+                <button id="restart" class="restart-btn translate-text" data-en="Try Again" data-mr="पुन्हा प्रयत्न करा">Try Again</button>
             </section>
 
             <section id="restart-screen" class="restart-screen hidden">
-                <p class="restart-message">Would you like to try again?</p>
-                <button id="return-to-start" class="restart-btn">Return to Start</button>
+                <p class="restart-message translate-text" data-en="Would you like to try again?" data-mr="तुम्हाला पुन्हा प्रयत्न करायचा आहे का?">Would you like to try again?</p>
+                <button id="return-to-start" class="restart-btn translate-text" data-en="Return to Start" data-mr="सुरुवातीला परत जा">Return to Start</button>
             </section>
         </main>
     </div>
