@@ -7,14 +7,11 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Restore the original featured image -->
     <div class="featured-image">
-        <img src="images/startingimage.jpeg" alt="Starting Image">
+        <img src="images/startingimage.png" alt="Starting Image">
     </div>
     
-    <div class="slideshow-container">
-        <div class="slideshow-images"></div>
-    </div>
-
     <div class="play-button-container">
         <button id="lets-play-btn" class="play-button translate-text" data-en="Let's Play" data-mr="चला खेळूया">Let's Play</button>
     </div>
@@ -73,7 +70,11 @@
 
             <section id="results" class="results hidden">
                 <h2 class="translate-text" data-en="Quiz Complete!" data-mr="क्विझ पूर्ण झाले!">Quiz Complete!</h2>
-                <p class="translate-text" data-en="You scored" data-mr="तुमचे गुण">You scored <span id="score">0</span> <span class="translate-text" data-en="out of" data-mr="पैकी">out of</span> 10</p>
+                <p>
+                    <span class="translate-text" data-en="You scored" data-mr="तुमचे गुण">You scored</span> 
+                    <span id="score">0</span> 
+                    <span class="translate-text" data-en="points" data-mr="गुण">points</span>
+                </p>
                 <div id="review" class="review-section"></div>
                 <button id="restart" class="restart-btn translate-text" data-en="Try Again" data-mr="पुन्हा प्रयत्न करा">Try Again</button>
             </section>
@@ -85,5 +86,6 @@
         </main>
     </div>
     <script src="script.js"></script>
+    <script src="background-gallery.js"></script>
 </body>
 </html>

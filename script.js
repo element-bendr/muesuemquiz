@@ -9,18 +9,7 @@ class QuizGame {
         this.wrongAnswers = [];
         this.isTransitioning = false;
         this.currentLanguage = 'en';
-        this.slideshowTimer = null;
-        this.currentSlide = 0;
-        this.images = [
-            "images/Darshan Dwar Phulkari.jpg",
-            "images/Depiction of Ramayana.jpg",
-            "images/Hanuman Dancing Mask.png",
-            "images/Jumadi Bhuta Mask.png",
-            "images/Mumbai Lifestyle.png",
-            "images/Navagunjara Patachitra.jpg",
-            "images/Tree of Life.png"
-        ];
-
+        
         // DOM elements
         // Language selectors
         this.selectEnBtn = document.getElementById('select-en');
@@ -42,9 +31,6 @@ class QuizGame {
         this.quizContent = document.querySelector('.quiz-content');
         this.currentQuestionEl = document.getElementById('current-question');
 
-        // Initialize slideshow
-        this.initializeSlideshow();
-
         // Event listeners
         this.selectEnBtn.addEventListener('click', () => this.selectLanguage('en'));
         this.selectMrBtn.addEventListener('click', () => this.selectLanguage('mr'));
@@ -56,22 +42,20 @@ class QuizGame {
         const letsPlayBtn = document.getElementById('lets-play-btn');
         if (letsPlayBtn) {
             letsPlayBtn.addEventListener('click', () => {
-                // Hide featured image and slideshow
+                // Hide featured image and play button
                 document.querySelector('.featured-image').style.opacity = '0';
-                document.querySelector('.slideshow-container').style.opacity = '0';
                 document.querySelector('.play-button-container').style.opacity = '0';
                 
                 // After fade out, hide elements and show start screen
                 setTimeout(() => {
                     document.querySelector('.featured-image').style.display = 'none';
-                    document.querySelector('.slideshow-container').style.display = 'none';
                     document.querySelector('.play-button-container').style.display = 'none';
                     
-            // Show main container and start screen
-            this.mainContainer.style.display = 'flex';
-            this.mainContainer.classList.remove('expanded');
-            this.startScreen.classList.remove('hidden');
-            this.startScreen.style.opacity = '0';
+                    // Show main container and start screen
+                    this.mainContainer.style.display = 'flex';
+                    this.mainContainer.classList.remove('expanded');
+                    this.startScreen.classList.remove('hidden');
+                    this.startScreen.style.opacity = '0';
                     
                     // Fade in start screen
                     requestAnimationFrame(() => {
@@ -86,64 +70,18 @@ class QuizGame {
         this.initializeTranslations();
     }
 
-    initializeSlideshow() {
-        const slideshowContainer = document.querySelector('.slideshow-images');
-        if (!slideshowContainer) return;
-
-        // Create and append images
-        this.images.forEach(src => {
-            const img = document.createElement('img');
-            img.src = src;
-            img.alt = 'Artwork';
-            slideshowContainer.appendChild(img);
-        });
-
-        // Clone first few images and append to end for smooth infinite loop
-        for (let i = 0; i < 3; i++) {
-            const img = document.createElement('img');
-            img.src = this.images[i];
-            img.alt = 'Artwork';
-            slideshowContainer.appendChild(img);
-        }
-
-        // Start slideshow
-        this.startSlideshow();
-    }
-
-    startSlideshow() {
-        if (this.slideshowTimer) clearInterval(this.slideshowTimer);
-        
-        const slideshowContainer = document.querySelector('.slideshow-images');
-        const imageWidth = 320; // 300px width + 20px margins
-        
-        this.slideshowTimer = setInterval(() => {
-            this.currentSlide++;
-            slideshowContainer.style.transition = 'transform 0.5s ease-in-out';
-            slideshowContainer.style.transform = `translateX(-${this.currentSlide * imageWidth}px)`;
-
-            // Reset to start when reaching the end
-            if (this.currentSlide >= this.images.length) {
-                this.currentSlide = 0;
-                setTimeout(() => {
-                    slideshowContainer.style.transition = 'none';
-                    slideshowContainer.style.transform = 'translateX(0)';
-                }, 500);
-            }
-        }, 3000);
-    }
-
     initializeTranslations() {
         document.querySelectorAll('.translate-text').forEach(element => {
             this.updateElementText(element);
         });
         
-        // Update the quiz rules to mention the special puzzle
+        // Update the quiz rules without mentioning the special puzzle
         const rulesElement = document.querySelector('.rules-header ul li:first-child');
         if (rulesElement) {
             if (this.currentLanguage === 'mr') {
-                rulesElement.textContent = 'प्रत्येक प्रश्नासाठी तुमच्याकडे 10 सेकंद आहेत (पझलसाठी 25 सेकंद)';
+                rulesElement.textContent = 'प्रत्येक प्रश्नासाठी तुमच्याकडे 10 सेकंद आहेत';
             } else {
-                rulesElement.textContent = 'You have 10 seconds per question (25 seconds for puzzle)';
+                rulesElement.textContent = 'You have 10 seconds per question';
             }
         }
     }
@@ -648,9 +586,6 @@ class QuizGame {
             const button = document.createElement('button');
             button.textContent = option;
             button.className = 'option-btn';
-            if (index === question.correctAnswer) {
-                button.classList.add('hint');
-            }
             button.style.opacity = '0';
             button.style.transform = 'translateY(20px)';
             button.addEventListener('click', () => this.selectAnswer(index));
@@ -773,8 +708,8 @@ class QuizGame {
                 this.optionsEl.style.opacity = '1';
             });
             
-            // Set up puzzle timer (longer timer for puzzle - 25 seconds)
-            this.timeLeft = 25;
+            // Set up puzzle timer (longer timer for puzzle - 50 seconds instead of 25)
+            this.timeLeft = 50;
             this.updateTimerDisplay();
             this.updatePuzzleTimerDisplay();
             if (this.timer) clearInterval(this.timer);
@@ -1113,20 +1048,23 @@ class QuizGame {
     handlePuzzleComplete() {
         if (this.timer) clearInterval(this.timer);
         
-        // Add to score
-        this.score += this.puzzleScore;
+        // Award points based on completion time
+        // ...existing code...
         
-        // Show success message
-        const successMessage = document.createElement('div');
-        successMessage.className = 'puzzle-success';
-        successMessage.innerHTML = `
-            <h3>${this.currentLanguage === 'mr' ? 'उत्तम!' : 'Excellent!'}</h3>
-            <p>${this.currentLanguage === 'mr' ? 'तुम्ही यशस्वीरित्या नवगुंजराची रचना केली' : 'You successfully assembled the Navagunjara'}</p>
-        `;
-        document.querySelector('.puzzle-container').appendChild(successMessage);
+        // Hide the outline
+        const outlineElement = document.querySelector('.puzzle-outline');
+        if (outlineElement) {
+            outlineElement.classList.add('hidden');
+        }
         
-        // Wait before moving to next question
-        setTimeout(() => this.nextQuestion(), 2000);
+        // Show the complete image without success message
+        const puzzleArea = document.querySelector('.puzzle-area');
+        const completeImage = document.createElement('div');
+        completeImage.className = 'complete-navagunjara';
+        puzzleArea.appendChild(completeImage);
+        
+        // Wait 5 seconds before moving to next question
+        setTimeout(() => this.nextQuestion(), 5000);
     }
 
     handlePuzzleTimeout() {
@@ -1282,61 +1220,62 @@ class QuizGame {
             this.selectMrBtn.classList.remove('selected');
             this.startBtn.classList.add('hidden');
             
-            // Show featured image and slideshow
+            // Show featured image and play button (removed slideshow reference)
             const featuredImage = document.querySelector('.featured-image');
-            const slideshow = document.querySelector('.slideshow-container');
             const playButton = document.querySelector('.play-button-container');
             
             featuredImage.style.display = 'flex';
-            slideshow.style.display = 'block';
             playButton.style.display = 'flex';
             
             // Fade in all elements
             requestAnimationFrame(() => {
                 featuredImage.style.opacity = '1';
-                slideshow.style.opacity = '1';
                 playButton.style.opacity = '1';
             });
         }, 300);
     }
 
     getRandomQuestions(count) {
-        // Find the puzzle question
-        const puzzleQuestion = this.questions.find(q => q.type === 'puzzle');
-        
-        // Filter out the puzzle question from the pool
+        // Filter out puzzle questions from the selection pool
         const regularQuestions = this.questions.filter(q => q.type !== 'puzzle');
         
         // Get random questions from regular questions
         const shuffled = regularQuestions.sort(() => 0.5 - Math.random());
-        const randomQuestions = shuffled.slice(0, count - 1); // Get one less to make room for puzzle
-        
-        // Add the puzzle question as the last question
-        return [...randomQuestions, puzzleQuestion];
+        return shuffled.slice(0, count);
     }
 
     // New method to get feedback based on score
     getFeedback(score) {
-        if (score === 10) {
+        // Update score calculation for 10 regular questions (no puzzle)
+        const maxPossibleScore = 10;  // All questions are regular questions now
+
+        // Normalize score to a percentage for more flexible feedback
+        const scorePercentage = (score / maxPossibleScore) * 100;
+        
+        if (scorePercentage >= 90) {
             return this.currentLanguage === 'mr' ? 
                 "अभिनंदन!" : 
                 "Congratulations!";
-        } else if (score >= 5 && score <= 7) {
+        } else if (scorePercentage >= 70 && scorePercentage < 90) {
+            return this.currentLanguage === 'mr' ? 
+                "उत्तम प्रयत्न!" : 
+                "Excellent effort!";
+        } else if (scorePercentage >= 50 && scorePercentage < 70) {
             return this.currentLanguage === 'mr' ? 
                 "चांगला प्रयत्न!" : 
                 "Good try!";
-        } else if (score >= 3 && score <= 4) {
+        } else if (scorePercentage >= 30 && scorePercentage < 50) {
             return this.currentLanguage === 'mr' ? 
                 "चांगली सुरुवात!" : 
                 "Good start!";
-        } else if (score >= 1 && score <= 2) {
+        } else if (scorePercentage > 0 && scorePercentage < 30) {
             return this.currentLanguage === 'mr' ? 
                 "गॅलरीला भेट द्या आणि पुन्हा प्रयत्न करा." : 
                 "Visit the gallery and try again.";
         } else {
             return this.currentLanguage === 'mr' ? 
-                "कोणतेही गुण नाहीत - कृपया पुन्हा प्रयत्न करा." : 
-                "No score - please try again.";
+                "प्रयत्न करा आणि प्रगती पहा!" : 
+                "Try and see your progress!";
         }
     }
 

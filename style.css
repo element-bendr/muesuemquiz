@@ -67,66 +67,37 @@
     inset 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-/* Featured Image */
-.featured-image {
+/* Featured Image Container - Now just a spacer for button positioning */
+.featured-image-container {
     width: 100%;
     height: 60vh;
-    opacity: 1;
-    transition: opacity 0.3s ease, display 0s linear 0.3s;
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
-    margin-bottom: 2rem;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(5px);
-}
-
-.featured-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
-/* Slideshow */
-.slideshow-container {
-    width: 100%;
-    height: 200px;
-    opacity: 1;
-    transition: opacity 0.3s ease, display 0s linear 0.3s;
     position: relative;
-    overflow: hidden;
-    margin-bottom: 2rem;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(5px);
+    z-index: 2;
 }
 
-.slideshow-images {
-    display: flex;
-    height: 100%;
-    transition: transform 0.5s ease-in-out;
-}
+/* Remove the old featured-image class since we're not using it */
+/* Remove .featured-image styles */
 
-.slideshow-images img {
-    min-width: 300px;
-    height: 100%;
-    object-fit: contain;
-    margin: 0 10px;
-}
-
-/* Play Button */
+/* Play Button - Update to work with gallery background */
 .play-button-container {
     display: flex;
     justify-content: center;
-    margin-bottom: 2rem;
+    margin-bottom: 0;
     opacity: 1;
-    transition: opacity 0.3s ease, display 0s linear 0.3s;
+    transition: opacity 0.3s ease;
+    position: relative;
+    z-index: 10;
 }
 
+/* Play Button */
 .play-button {
     padding: 20px 60px;
     font-size: 2rem;
-    background: linear-gradient(135deg, var(--rustic-turquoise), var(--roasted-orange));
+    /* Replace variable-based gradient with direct color values */
+    background: linear-gradient(135deg, rgb(159, 0, 0), rgb(243, 235, 124));
     color: white;
     border: none;
     border-radius: 12px;
@@ -164,68 +135,19 @@ body {
   margin: 0;
   padding: 0;
   font-family: system-ui, -apple-system, sans-serif;
-  background: 
-    /* Primary gradient overlay with multiple color stops */
-    linear-gradient(135deg, 
-      rgba(114, 39, 12, 0.92), 
-      rgba(138, 40, 0, 0.9), 
-      rgba(180, 64, 0, 0.85), 
-      rgba(213, 168, 0, 0.82)
-    ),
-    /* Secondary pattern layer with cultural motifs */
-    url('images/cultural-pattern.png'),
-    /* Base tribal pattern */
-    url('images/tribalpatterns.jpg');
-  background-size: cover, 300px, 200px;
-  background-repeat: no-repeat, repeat, repeat;
-  background-position: center, center, center;
-  background-blend-mode: normal, soft-light, luminosity;
+  background: linear-gradient(135deg, 
+    rgba(87, 59, 32, 0.92),    /* Deep chocolate brown */
+    rgba(121, 85, 61, 0.9),    /* Rich medium brown */
+    rgba(155, 118, 83, 0.85),  /* Warm taupe */
+    rgba(210, 180, 140, 0.82)  /* Classic beige/tan */
+  );
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
   background-attachment: fixed;
-  animation: subtleTextureShift 60s linear infinite;
   min-height: 100vh;
   line-height: 1.6;
   position: relative;
-}
-
-/* Add decorative frame corners to body */
-body::before, body::after,
-body > *:first-child::before, body > *:first-child::after {
-  content: '';
-  position: fixed;
-  width: 100px;
-  height: 100px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  opacity: 0.7;
-  z-index: 100;
-  pointer-events: none;
-}
-
-body::before {
-  top: 20px;
-  left: 20px;
-  background-image: url('images/corner-tl.png');
-}
-
-body::after {
-  top: 20px;
-  right: 20px;
-  background-image: url('images/corner-tr.png');
-  transform: rotate(90deg);
-}
-
-body > *:first-child::before {
-  bottom: 20px;
-  left: 20px;
-  background-image: url('images/corner-bl.png');
-  transform: rotate(270deg);
-}
-
-body > *:first-child::after {
-  bottom: 20px;
-  right: 20px;
-  background-image: url('images/corner-br.png');
-  transform: rotate(180deg);
 }
 
 /* Soft vignette overlay for framing */
@@ -247,38 +169,24 @@ body::before {
 
 /* Enhanced animation for background layers */
 @keyframes subtleTextureShift {
-  0% { 
-    background-position: center, 0 0, 0 0; 
-  }
-  25% { 
-    background-position: center, 50px 25px, 30px 50px; 
-  }
-  50% { 
-    background-position: center, 100px 50px, 60px 100px; 
-  }
-  75% { 
-    background-position: center, 50px 75px, 90px 150px; 
-  }
-  100% { 
-    background-position: center, 0 100px, 120px 200px; 
-  }
+   0%, 100% { background-position: center; }
 }
 
-/* Update variable colors to match new theme */
+/* Update variable colors to match new beige and brown theme */
 :root {
-  --rustic-turquoise: #72270c;
-  --roasted-orange: #8a2800;
-  --lake-view: #b44000;
-  --burnt-sienna: #d35400;
-  --golden-amber: #e67e22;
-  --light-amber: #f39c12;
-  --brownie-points: #5d1f0c;
-  --sun-kiss: #d5a800;
+  --rustic-turquoise: #573b20;    /* Deep brown replacing turquoise */
+  --roasted-orange: #79553d;      /* Medium brown replacing orange */
+  --lake-view: #9b7653;          /* Warm taupe replacing blue */
+  --burnt-sienna: #b38b6d;        /* Light brown */
+  --golden-amber: #c8a887;        /* Amber beige */
+  --light-amber: #d2b48c;         /* Classic tan */
+  --brownie-points: #3a2915;      /* Dark chocolate */
+  --sun-kiss: #e8d8bf;            /* Light cream beige */
   --glass-bg: rgba(255, 255, 255, 0.9);
   --glass-border: rgba(255, 255, 255, 0.6);
   --dark-overlay: rgba(0, 0, 0, 0.15);
-  --progress-start: #72270c;
-  --progress-end: #d5a800;
+  --progress-start: #573b20;      /* Match deep brown */
+  --progress-end: #d2b48c;        /* Match tan */
 }
 
 /* Main container setup */
@@ -1193,4 +1101,199 @@ body::before {
   .question-image-container {
     min-height: 300px;
   }
+}
+
+/* Puzzle buttons styling */
+.puzzle-btn {
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    /* Use explicit color values for consistency */
+    background: linear-gradient(135deg, rgb(159, 0, 0), rgb(243, 235, 124));
+    color: white;
+    border: none;
+    border-radius: 8px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 
+        0 4px 8px rgba(0, 0, 0, 0.1),
+        0 8px 16px rgba(232, 119, 54, 0.2);
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.puzzle-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 6px 12px rgba(0, 0, 0, 0.15),
+        0 12px 24px rgba(232, 119, 54, 0.3);
+}
+
+.puzzle-btn:active {
+    transform: translateY(0);
+}
+
+/* Gallery Background Animation - Make more prominent initially */
+.gallery-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.gallery-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 2s ease-in-out, transform 25s ease-out;
+    z-index: -2;
+}
+
+.gallery-img.active {
+    opacity: 0.3; /* Increase from 0.15 to 0.3 for more visibility on start screen */
+    z-index: -1;
+}
+
+.gallery-img.next {
+    opacity: 0;
+    z-index: -4;
+}
+
+.gallery-img.fade-out {
+    opacity: 0;
+    transition: opacity 2s ease-in-out;
+}
+
+/* Add a dark overlay between the gallery and the content */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, 
+      rgba(87, 59, 32, 0.92),
+      rgba(121, 85, 61, 0.9),
+      rgba(155, 118, 83, 0.85),
+      rgba(210, 180, 140, 0.82)
+    );
+    z-index: -1;
+}
+
+/* Featured Image - Keep centered */
+.featured-image {
+    width: 100%;
+    height: 77vh;
+    opacity: 1;
+    transition: opacity 0.3s ease, display 0s linear 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    margin-bottom: 1rem;
+/*background: rgba(255, 255, 255, 0.1);*/
+    backdrop-filter: blur(5px);
+    position: relative;
+    z-index: 5; /* Ensure it's above the background gallery */
+}
+
+.featured-image img {
+    max-width: 90%;
+    max-height: 90%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Gallery Background Animation - Adjust to be behind everything */
+.gallery-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -3; /* Changed from -10 to -3 to be in front of body background */
+    overflow: hidden;
+}
+
+.gallery-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 2s ease-in-out, transform 25s ease-out;
+    z-index: -3;
+}
+
+.gallery-img.active {
+    opacity: 0.4; /* Increased from 0.15 to 0.4 for more visibility */
+    z-index: -3;
+}
+
+.gallery-img.next {
+    opacity: 0;
+    z-index: -4;
+}
+
+.gallery-img.fade-out {
+    opacity: 0;
+    transition: opacity 2s ease-in-out;
+}
+
+/* Adjust overlay to be between gallery and content */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, 
+      rgba(87, 59, 32, 0.85),  /* Reduced opacity from 0.92 to 0.85 */
+      rgba(121, 85, 61, 0.8),  /* Reduced opacity from 0.9 to 0.8 */
+      rgba(155, 118, 83, 0.75), /* Reduced opacity from 0.85 to 0.75 */
+      rgba(210, 180, 140, 0.7)  /* Reduced opacity from 0.82 to 0.7 */
+    );
+    z-index: -2; /* Changed from -5 to -2 so gallery can show through */
+}
+
+/* Gallery Background Animation - Refined settings for continuous display */
+.gallery-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 3s ease-in-out, transform 30s ease-out; /* Slower transitions */
+    z-index: -3;
+}
+
+.gallery-img.active {
+    opacity: 0.3; /* Moderate opacity that's visible but not distracting */
+    z-index: -3;
+}
+
+/* Increase transition time between images for more subtle changes */
+.gallery-img.fade-out {
+    opacity: 0;
+    transition: opacity 3s ease-in-out; /* Slower fade out for gentler transitions */
 }

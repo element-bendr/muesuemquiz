@@ -1,0 +1,189 @@
+/* Jigsaw Puzzle Specific Styles */
+
+.jigsaw-puzzle-area {
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid var(--glass-border);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.jigsaw-board {
+    width: 90%;
+    height: 90%;
+    position: relative;
+    background-image: url('images/navagunjara-outline.png');
+    background-size: 80%;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.3;
+}
+
+.jigsaw-pieces {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.jigsaw-piece {
+    position: relative;
+    cursor: grab;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    height: 120px;
+}
+
+.jigsaw-piece img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    position: relative;
+    z-index: 2;
+}
+
+.jigsaw-piece::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 3px solid var(--roasted-orange);
+    border-radius: 8px;
+    z-index: 1;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Piece shapes - these will have irregular borders to simulate jigsaw edges */
+.jigsaw-piece[data-animal="peacock"]::before {
+    clip-path: polygon(0% 0%, 85% 0%, 100% 15%, 100% 100%, 80% 85%, 0% 85%);
+}
+
+.jigsaw-piece[data-animal="snake"]::before {
+    clip-path: polygon(15% 0%, 100% 0%, 100% 85%, 85% 100%, 0% 100%, 0% 15%);
+}
+
+.jigsaw-piece[data-animal="bull"]::before {
+    clip-path: polygon(0% 0%, 85% 0%, 100% 15%, 100% 85%, 85% 100%, 15% 100%, 0% 85%);
+}
+
+.jigsaw-piece[data-animal="elephant"]::before {
+    clip-path: polygon(15% 0%, 85% 0%, 100% 15%, 100% 85%, 85% 100%, 0% 100%);
+}
+
+.jigsaw-piece[data-animal="human-hand"]::before {
+    clip-path: polygon(0% 0%, 100% 0%, 85% 85%, 85% 100%, 15% 100%, 15% 85%);
+}
+
+.jigsaw-piece[data-animal="deer"]::before {
+    clip-path: polygon(0% 15%, 15% 0%, 85% 0%, 100% 15%, 85% 85%, 15% 85%);
+}
+
+.jigsaw-piece[data-animal="tiger"]::before {
+    clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 15% 100%, 0% 85%, 0% 15%);
+}
+
+.jigsaw-piece:hover {
+    transform: translateY(-5px) scale(1.05);
+    z-index: 10;
+}
+
+.jigsaw-piece:hover::before {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+    border-color: var(--golden-amber);
+}
+
+.jigsaw-piece.dragging {
+    opacity: 0.7;
+    z-index: 100;
+}
+
+.jigsaw-piece.placed {
+    position: absolute;
+    transform: none !important;
+    transition: all 0.3s ease;
+}
+
+.jigsaw-piece.correct {
+    cursor: default;
+}
+
+.jigsaw-piece.correct::before {
+    border-color: #4caf50;
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.4);
+}
+
+.jigsaw-connection {
+    position: absolute;
+    background-color: rgba(76, 175, 80, 0.3);
+    z-index: 1;
+    border-radius: 4px;
+    animation: pulse-connection 1s infinite;
+}
+
+@keyframes pulse-connection {
+    0% { opacity: 0.3; }
+    50% { opacity: 0.6; }
+    100% { opacity: 0.3; }
+}
+
+.hint-connection {
+    position: absolute;
+    background-color: rgba(213, 168, 0, 0.5);
+    z-index: 1;
+    border-radius: 4px;
+    animation: pulse-hint 1.5s infinite;
+}
+
+/* Piece positions when connected correctly */
+.piece-position-0 { top: 5%; left: 10%; }   /* Peacock */
+.piece-position-1 { top: 15%; left: 30%; }  /* Snake */
+.piece-position-2 { top: 25%; left: 50%; }  /* Bull */
+.piece-position-3 { top: 40%; left: 65%; }  /* Elephant */
+.piece-position-4 { top: 60%; left: 50%; }  /* Human Hand */
+.piece-position-5 { top: 70%; left: 30%; }  /* Deer */
+.piece-position-6 { top: 55%; left: 15%; }  /* Tiger */
+
+/* Complete image reveal */
+.complete-navagunjara {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('images/navagunjara-complete.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0;
+    z-index: 5;
+    pointer-events: none;
+    animation: fadeInImage 1.5s ease-in-out forwards;
+    animation-delay: 0.5s; /* Delay to show after pieces are in place */
+}
+
+@keyframes fadeInImage {
+    0% { opacity: 0; }
+    100% { opacity: 1; } /* Change from 0.9 to 1 for full opacity */
+}
+
+/* When complete image is shown, hide the outline */
+.puzzle-outline.hidden {
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+}
+
+/* When complete image is shown, slightly fade the pieces */
+.jigsaw-piece.correct {
+    transition: opacity 1.5s ease-in-out;
+}
+
+.complete-navagunjara ~ .jigsaw-piece.correct {
+    opacity: 0.5; /* Make pieces more transparent (change from 0.7 to 0.5) */
+}
