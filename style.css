@@ -117,29 +117,13 @@
     transform: translateY(0);
 }
 
-/* Global styles */
-:root {
-  --rustic-turquoise: rgb(0, 149, 159);
-  --roasted-orange: rgb(232, 119, 54);
-  --lake-view: rgb(182, 221, 203);
-  --brownie-points: rgb(117, 80, 68);
-  --sun-kiss: rgb(231, 215, 185);
-  --glass-bg: rgba(255, 255, 255, 0.85);
-  --glass-border: rgba(255, 255, 255, 0.5);
-  --dark-overlay: rgba(0, 0, 0, 0.1);
-  --progress-start: rgb(0, 30, 30);
-  --progress-end: rgb(0, 25, 60);
-}
-
 body {
   margin: 0;
   padding: 0;
   font-family: system-ui, -apple-system, sans-serif;
   background: linear-gradient(135deg, 
-    rgba(87, 59, 32, 0.92),    /* Deep chocolate brown */
-    rgba(121, 85, 61, 0.9),    /* Rich medium brown */
-    rgba(155, 118, 83, 0.85),  /* Warm taupe */
-    rgba(210, 180, 140, 0.82)  /* Classic beige/tan */
+    rgba(232, 216, 191, 0.95), /* Beige from sun-kiss var */
+    rgba(255, 255, 255, 0.95)  /* Fading to white */
   );
   background-size: cover;
   background-repeat: no-repeat;
@@ -167,12 +151,29 @@ body::before {
   z-index: 1;
 }
 
+/* Adjust overlay to maintain visual hierarchy with new background */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, 
+    rgba(232, 216, 191, 0.8),  /* Reduced from 0.85 to 0.8 */
+    rgba(244, 238, 225, 0.75), /* Reduced from 0.8 to 0.75 */
+    rgba(250, 247, 240, 0.7),  /* Reduced from 0.75 to 0.7 */
+    rgba(255, 255, 255, 0.65)  /* Reduced from 0.7 to 0.65 */
+  );
+  z-index: -2;
+}
+
 /* Enhanced animation for background layers */
 @keyframes subtleTextureShift {
    0%, 100% { background-position: center; }
 }
 
-/* Update variable colors to match new beige and brown theme */
+/* This is the only root that should remain */
 :root {
   --rustic-turquoise: #573b20;    /* Deep brown replacing turquoise */
   --roasted-orange: #79553d;      /* Medium brown replacing orange */
@@ -184,8 +185,8 @@ body::before {
   --sun-kiss: #e8d8bf;            /* Light cream beige */
   --glass-bg: rgba(255, 255, 255, 0.9);
   --glass-border: rgba(255, 255, 255, 0.6);
-  --dark-overlay: rgba(0, 0, 0, 0.15);
-  --progress-start: #573b20;      /* Match deep brown */
+  --dark-overlay: rgba(101, 240, 164, 0);
+  --progress-start: #945923;      /* Match deep brown */
   --progress-end: #d2b48c;        /* Match tan */
 }
 
@@ -201,7 +202,7 @@ body::before {
   position: relative;
   z-index: 1;
   max-width: 1600px;
-  margin: 2rem auto;
+  margin: 0.5rem auto;
   align-items: flex-start;
   justify-content: space-between;
 }
@@ -283,22 +284,22 @@ body::before {
   font-size: 1.4rem;
 }
 
-/* Quiz area */
+/* Quiz area - Make extremely transparent with enhanced shadow for definition */
 .quiz-area {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
   background: linear-gradient(135deg, 
-    rgba(255, 255, 255, 0.95), 
-    rgba(255, 255, 255, 0.85)
+    rgba(232, 216, 191, 0.2), /* Dramatically reduced opacity from 0.75 to 0.35 */
+    rgba(255, 255, 255, 0)   /* Dramatically reduced opacity from 0.75 to 0.4 */
   );
-  backdrop-filter: blur(10px);
-  border: 2px solid var(--glass-border);
+  backdrop-filter: blur(8px);  /* Slightly reduced blur for more transparency */
+  border: 2px solid rgba(255, 255, 255, 0.4); /* More transparent border */
   border-radius: 16px;
   box-shadow: 
-    0 4px 15px rgba(0, 0, 0, 0.15),
-    0 8px 32px rgba(255, 255, 255, 0.1),
-    inset 0 2px 16px rgba(255, 255, 255, 0.6);
+    0 8px 30px rgba(79, 55, 39, 0.25),  /* Enhanced shadow depth */
+    0 15px 50px rgba(232, 216, 191, 0.3),  /* Extended glow with beige tint */
+    inset 0 2px 16px rgba(255, 255, 255, 0.3); /* More transparent inner glow */
   padding: 30px;
   position: relative;
   overflow: hidden;
@@ -322,17 +323,17 @@ body::before {
   z-index: 0;
 }
 
-/* Header and progress */
+/* Header and progress - Remove background and adjust alignment */
 .header-content {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 2rem;
+  align-items: center;
+  margin-bottom: 1rem;
   color: var(--brownie-points);
   font-weight: bold;
-  padding: 15px;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.3);
+  padding: 8px;
+  /* Remove border-radius and background */
+  background: transparent;
   font-size: 1.3rem;
 }
 
@@ -344,25 +345,21 @@ body::before {
 
 .question-progress h2 {
   margin: 0;
-  font-size: 1.4rem;
+  font-size: 1.3rem;
 }
 
-/* Progress bar */
+/* Progress bar - Update colors to match beige theme */
 .progress-bar {
   width: 100%;
-  height: 8px;
-  background: linear-gradient(to right, 
-    rgba(213, 168, 0, 0.1),
-    rgba(180, 64, 0, 0.1),
-    rgba(213, 168, 0, 0.1)
-  );
+  height: 6px;
+  background: rgba(232, 216, 191, 0.3);
   background-size: 200% 100%;
   border-radius: 8px;
   position: relative;
   overflow: hidden;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
-  margin: 5px 0;
-  border: 1px solid rgba(114, 39, 12, 0.2);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  margin: 3px 0 0; /* Adjusted bottom margin to remove extra space */
+  border: 1px solid rgba(232, 216, 191, 0.4);
 }
 
 .progress-fill {
@@ -370,77 +367,30 @@ body::before {
   height: 100%;
   background: linear-gradient(
     to right,
-    var(--rustic-turquoise),
     var(--burnt-sienna),
     var(--golden-amber),
-    var(--light-amber),
-    var(--sun-kiss)
+    var(--light-amber)
   );
   background-size: 200% 100%;
   transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 
-    inset 0 0 8px rgba(0, 0, 0, 0.3),
-    0 0 4px rgba(213, 168, 0, 0.4);
+    inset 0 0 8px rgba(0, 0, 0, 0.2),
+    0 0 4px rgba(232, 216, 191, 0.4);
   animation: pulse 1.5s ease-in-out infinite, gradientShift 2s linear infinite;
 }
 
-/* Question container */
-#question {
-  margin-bottom: 1.5rem;
-  margin-top: -1rem;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.question-main-container {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  max-width: 90%;
-  margin: 0 auto;
-}
-
-.question-text {
-  font-size: 1.8rem;
-  color: #72270c;
-  line-height: 1.6;
-  padding: 20px 35px;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(5px);
-  border: 2px solid rgba(114, 39, 12, 0.3);
-  border-radius: 16px;
-  box-shadow: 
-    0 4px 15px rgba(0, 0, 0, 0.1),
-    0 0 0 2px rgba(213, 168, 0, 0.1);
-  text-align: center;
-  margin-bottom: 1rem;
-  font-weight: bold;
-  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.8);
-  position: relative;
-  overflow: hidden;
-}
-
-.question-text::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 4px;
-  background: linear-gradient(to right, #72270c, #d5a800);
-  opacity: 0.6;
-}
-
-/* Timer */
+/* Timer - Remove container box and update styling */
 .timer {
   font-size: 1.6rem;
   font-weight: bold;
   color: var(--brownie-points);
-  padding: 12px 25px;
-  border-radius: 12px;
-  background: var(--glass-bg);
-  backdrop-filter: blur(5px);
-  border: 2px solid var(--glass-border);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 8px 15px;
+  /* Remove all container styling */
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  backdrop-filter: none;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -449,8 +399,46 @@ body::before {
 .timer[data-time="low"] {
   color: var(--roasted-orange);
   animation: pulse 1s infinite;
-  background: rgba(255, 255, 255, 0.9);
-  border-color: var(--roasted-orange);
+  /* Remove background and border */
+  background: transparent;
+  border: none;
+}
+
+/* Question container */
+#question {
+  margin-bottom: 1rem;
+  margin-top: -1.5rem;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.question-main-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Reduced from 20px to 10px to tighten spacing */
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+.question-text {
+  font-size: 2rem;
+  color: black; /* Changed from white to black for better readability */
+  line-height: 1.6;
+  padding: 20px 35px;
+  text-align: center;
+  margin-bottom: 0.5rem; /* Reduced from 1rem to 0.5rem */
+  font-weight: bold;
+  text-shadow: /* Adjusted for black text */
+    0 0 10px rgba(255, 255, 255, 0.8),
+    0 0 20px rgba(255, 255, 255, 0.5);
+  position: relative;
+  overflow: hidden;
+  /* No background - text will be displayed against the quiz-area gradient */
+  background: transparent;
+}
+
+/* Remove the colorful top border in the question text */
+.question-text::before {
+  display: none; /* Hide the gradient line at the top */
 }
 
 /* Start screen */
@@ -546,22 +534,21 @@ body::before {
   margin: 0 auto;
 }
 
-/* Image styling */
+/* Image styling - Boxless version - Larger size */
 .question-image-container {
   border-radius: 16px;
   overflow: hidden;
   width: 100%;
-  max-width: 800px;
+  max-width: 1000px; /* Increased from 800px to 1000px */
   height: auto;
-  min-height: 400px;
+  min-height: 500px; /* Increased from 400px to 500px */
   position: relative;
-  margin: 0 auto;
-  box-shadow: 
-    0 4px 15px rgba(0, 0, 0, 0.1),
-    0 8px 32px rgba(255, 255, 255, 0.1);
-  border: 2px solid var(--glass-border);
+  margin: 0.5rem auto 1.5rem; /* Changed from 0 auto 2rem to 0.5rem auto 1.5rem */
+  background: transparent;
+  border: none;
   cursor: pointer;
-  background: rgba(255, 255, 255, 0.9);
+  filter: drop-shadow(0 8px 25px rgba(0, 0, 0, 0.5)); /* Enhanced shadow for larger image */
+  animation: fadeInScale 0.6s ease-out; /* Add entrance animation */
 }
 
 .question-image-container img {
@@ -573,12 +560,16 @@ body::before {
   object-fit: contain;
   display: block;
   transition: transform 0.3s ease;
+  filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.4)); /* Enhanced glow */
 }
 
-.question-image-container:hover img {
-  transform: scale(1.02);
+/* Add animation keyframes for image entrance */
+@keyframes fadeInScale {
+  0% { opacity: 0; transform: scale(0.96); }
+  100% { opacity: 1; transform: scale(1); }
 }
 
+/* Enlarged image needs dark background to be visible */
 .question-image-container.enlarged {
   position: fixed;
   top: 50%;
@@ -587,9 +578,23 @@ body::before {
   width: 90vw;
   height: 90vh;
   max-width: none;
-  z-index: 1000;
+  z-index: 9999; /* Extremely high z-index to ensure it's above everything */
   background: rgba(0, 0, 0, 0.9);
   padding: 20px;
+  border-radius: 8px;
+}
+
+/* Add a modal overlay to prevent clicks on elements underneath */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(116, 113, 110, 0); /* Brown-tinted semi-transparent background matching theme */
+  z-index: 9998; /* Just below the enlarged image */
+  cursor: pointer;
+  display: none; /* Hidden by default - will be controlled by JavaScript */
 }
 
 /* Button styling */
@@ -1084,6 +1089,7 @@ body::before {
   .question-text {
     font-size: 1.5rem;
     padding: 20px;
+    margin-bottom: 0.3rem; /* Further reduced on mobile */
   }
   
   .option-btn {
@@ -1099,7 +1105,13 @@ body::before {
   }
   
   .question-image-container {
-    min-height: 300px;
+    min-height: 400px; /* Adjusted for mobile but still larger than original */
+    max-width: 95%; /* Allow more width on mobile */
+    margin-bottom: 1rem; /* Reduced from 1.5rem to 1rem on mobile */
+  }
+
+  .question-main-container {
+    gap: 5px; /* Even tighter spacing on mobile */
   }
 }
 
@@ -1158,8 +1170,8 @@ body::before {
 }
 
 .gallery-img.active {
-    opacity: 0.3; /* Increase from 0.15 to 0.3 for more visibility on start screen */
-    z-index: -1;
+    opacity: 0.45; /* Increased from 0.3/0.4 to 0.45 for better visibility */
+    z-index: -3;
 }
 
 .gallery-img.next {
@@ -1181,12 +1193,12 @@ body::after {
     width: 100%;
     height: 100%;
     background: linear-gradient(135deg, 
-      rgba(87, 59, 32, 0.92),
-      rgba(121, 85, 61, 0.9),
-      rgba(155, 118, 83, 0.85),
-      rgba(210, 180, 140, 0.82)
+      rgba(232, 216, 191, 0.8),  /* Reduced from 0.85 to 0.8 */
+      rgba(244, 238, 225, 0.75), /* Reduced from 0.8 to 0.75 */
+      rgba(250, 247, 240, 0.7),  /* Reduced from 0.75 to 0.7 */
+      rgba(255, 255, 255, 0.65)  /* Reduced from 0.7 to 0.65 */
     );
-    z-index: -1;
+    z-index: -2;
 }
 
 /* Featured Image - Keep centered */
@@ -1215,6 +1227,13 @@ body::after {
     object-position: center;
     display: block;
     margin: 0 auto;
+    /* Add subtle shadow to starting image */
+    filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.4));
+    transition: transform 0.3s ease;
+}
+
+.featured-image img:hover {
+    transform: scale(1.02);
 }
 
 /* Gallery Background Animation - Adjust to be behind everything */
@@ -1242,7 +1261,7 @@ body::after {
 }
 
 .gallery-img.active {
-    opacity: 0.4; /* Increased from 0.15 to 0.4 for more visibility */
+    opacity: 0.45; /* Make consistent with the earlier change from 0.3 to 0.45 */
     z-index: -3;
 }
 
@@ -1265,10 +1284,10 @@ body::after {
     width: 100%;
     height: 100%;
     background: linear-gradient(135deg, 
-      rgba(87, 59, 32, 0.85),  /* Reduced opacity from 0.92 to 0.85 */
-      rgba(121, 85, 61, 0.8),  /* Reduced opacity from 0.9 to 0.8 */
-      rgba(155, 118, 83, 0.75), /* Reduced opacity from 0.85 to 0.75 */
-      rgba(210, 180, 140, 0.7)  /* Reduced opacity from 0.82 to 0.7 */
+      rgba(232, 216, 191, 0.8),  /* Reduced from 0.85 to 0.8 */
+      rgba(244, 238, 225, 0.75), /* Reduced from 0.8 to 0.75 */
+      rgba(250, 247, 240, 0.7),  /* Reduced from 0.75 to 0.7 */
+      rgba(255, 255, 255, 0.65)  /* Reduced from 0.7 to 0.65 */
     );
     z-index: -2; /* Changed from -5 to -2 so gallery can show through */
 }
@@ -1288,7 +1307,7 @@ body::after {
 }
 
 .gallery-img.active {
-    opacity: 0.3; /* Moderate opacity that's visible but not distracting */
+    opacity: 0.45; /* Make consistent with the earlier change from 0.3 to 0.45 */
     z-index: -3;
 }
 
@@ -1296,4 +1315,207 @@ body::after {
 .gallery-img.fade-out {
     opacity: 0;
     transition: opacity 3s ease-in-out; /* Slower fade out for gentler transitions */
+}
+
+/* Fullscreen button styling */
+.fullscreen-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.7);
+  border: 2px solid var(--glass-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 100;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  padding: 8px;
+}
+
+.fullscreen-btn:hover {
+  background: rgba(255, 255, 255, 0.9);
+  transform: scale(1.1);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.fullscreen-btn svg {
+  width: 24px;
+  height: 24px;
+  stroke: var(--brownie-points);
+}
+
+.fullscreen-instruction {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.9);
+  padding: 12px 25px;
+  border-radius: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  color: var(--brownie-points);
+  font-weight: bold;
+  z-index: 100;
+  animation: fadeInUp 0.5s ease-out forwards, fadeOut 0.5s ease-in forwards 4.5s;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translate(-50%, 20px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+/* Reset notification styling */
+.reset-notification {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0s linear 0.5s;
+}
+
+.reset-notification.visible {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.5s ease, visibility 0s linear;
+}
+
+.reset-notification-content {
+  background: linear-gradient(135deg, 
+    rgba(232, 216, 191, 0.95),
+    rgba(255, 255, 255, 0.95)
+  );
+  padding: 30px 40px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border: 2px solid var(--glass-border);
+  max-width: 90%;
+  animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.reset-notification-content h3 {
+  color: var(--brownie-points);
+  font-size: 2rem;
+  margin: 0 0 15px 0;
+}
+
+.reset-notification-content p {
+  color: var(--roasted-orange);
+  font-size: 1.5rem;
+  margin: 10px 0;
+}
+
+.reset-countdown {
+  font-size: 3.5rem;
+  font-weight: bold;
+  color: var(--brownie-points);
+  margin: 15px 0 5px;
+  animation: pulse 1s infinite;
+}
+
+/* Review section styling - add these new styles */
+.review-header {
+  font-size: 1.8rem;
+  color: var(--brownie-points);
+  margin: 0 0 2rem 0;
+  padding: 10px 20px;
+  text-align: center;
+  border-bottom: 2px solid rgba(114, 39, 12, 0.2);
+}
+
+.review-section {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.review-item {
+  margin-bottom: 3rem;
+  border-radius: 16px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.35); /* Reduced from 0.6 to 0.35 for more transparency */
+  backdrop-filter: blur(8px); /* Added backdrop blur for readability despite transparency */
+  border: 1px solid rgba(255, 255, 255, 0.7); /* Added subtle white border for definition */
+  box-shadow: 
+    0 8px 30px rgba(0, 0, 0, 0.1), /* Lighter shadow */
+    0 0 15px rgba(255, 255, 255, 0.2); /* Added subtle white glow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.review-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 
+    0 12px 30px rgba(0, 0, 0, 0.15),
+    0 0 20px rgba(255, 255, 255, 0.3); /* Enhanced white glow on hover */
+}
+
+.review-item .question-text {
+  font-size: 1.7rem;
+  margin: 1rem 0;
+}
+
+.review-item .question-image-container {
+  min-height: 400px;
+  margin-bottom: 1.5rem;
+  cursor: pointer;
+  z-index: 5; /* Higher than surrounding content but lower than modal */
+}
+
+.review-item .options-grid {
+  margin-top: 1rem;
+}
+
+.review-item .option-btn {
+  padding: 15px 25px;
+  font-size: 1.4rem;
+  pointer-events: none;
+}
+
+.review-item .option-btn.correct {
+  animation: pulseCorrect 2s infinite;
+}
+
+@keyframes pulseCorrect {
+  0% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(76, 175, 80, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
+}
+
+/* Responsive adjustments for review section */
+@media (max-width: 768px) {
+  .review-item .question-text {
+    font-size: 1.4rem;
+  }
+  
+  .review-item .question-image-container {
+    min-height: 300px;
+  }
+  
+  .review-item .option-btn {
+    font-size: 1.2rem;
+    padding: 12px 20px;
+  }
 }

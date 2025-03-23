@@ -28,9 +28,9 @@ class BackgroundGallery {
     collectImages() {
         // Manually add all quiz artifact images
         const imageURLs = [
-            'images/Darshan Dwar Phulkari.jpg',
-            'images/Depiction of Ramayana.jpg',
-            'images/Navagunjara Patachitra.jpg',
+            'images/Darshan Dwar Phulkari.png', // Changed from .jpg to .png
+            'images/Depiction of Ramayana.png', // Changed from .jpg to .png
+            'images/Navagunjara Patachitra.png', // Changed from .jpg to .png
             'images/Hanuman Dancing Mask.png',
             'images/Mumbai Lifestyle.png',
             'images/Jumadi Bhuta Mask.png',

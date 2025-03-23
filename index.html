@@ -7,6 +7,22 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Add fullscreen button -->
+    <button id="fullscreen-toggle" class="fullscreen-btn" aria-label="Toggle fullscreen">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+        </svg>
+    </button>
+
+    <!-- Add reset notification overlay -->
+    <div id="reset-notification" class="reset-notification hidden">
+        <div class="reset-notification-content">
+            <h3 class="translate-text" data-en="You missed 3 questions in a row" data-mr="तुम्ही सलग 3 प्रश्न चुकले आहेत"></h3>
+            <p class="translate-text" data-en="Quiz restarting in" data-mr="क्विझ पुन्हा सुरू होत आहे"></p>
+            <div class="reset-countdown">5</div>
+        </div>
+    </div>
+
     <!-- Restore the original featured image -->
     <div class="featured-image">
         <img src="images/startingimage.png" alt="Starting Image">
@@ -53,9 +69,6 @@
                             <div class="progress-bar">
                                 <div class="progress-fill"></div>
                             </div>
-                            <div class="progress-text">
-                                <span class="translate-text" data-en="Progress" data-mr="प्रगती">Progress</span>
-                            </div>
                         </div>
                         <div class="timer" id="timer">
                             <span class="translate-text" data-en="Time: " data-mr="वेळ: ">Time: </span>
@@ -70,7 +83,7 @@
 
             <section id="results" class="results hidden">
                 <h2 class="translate-text" data-en="Quiz Complete!" data-mr="क्विझ पूर्ण झाले!">Quiz Complete!</h2>
-                <p>
+                <p></p>
                     <span class="translate-text" data-en="You scored" data-mr="तुमचे गुण">You scored</span> 
                     <span id="score">0</span> 
                     <span class="translate-text" data-en="points" data-mr="गुण">points</span>
@@ -87,5 +100,74 @@
     </div>
     <script src="script.js"></script>
     <script src="background-gallery.js"></script>
+    
+    <!-- Add fullscreen script before the closing body tag -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const fullscreenToggle = document.getElementById('fullscreen-toggle');
+            
+            // Function to enter fullscreen mode
+            const enterFullscreen = () => {
+                const element = document.documentElement;
+                
+                if (element.requestFullscreen) {
+                    element.requestFullscreen();
+                } else if (element.mozRequestFullScreen) { /* Firefox */
+                    element.mozRequestFullScreen();
+                } else if (element.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+                    element.webkitRequestFullscreen();
+                } else if (element.msRequestFullscreen) { /* IE/Edge */
+                    element.msRequestFullscreen();
+                }
+            };
+            
+            // Function to exit fullscreen mode
+            const exitFullscreen = () => {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.mozCancelFullScreen) { /* Firefox */
+                    document.mozCancelFullScreen();
+                } else if (document.webkitExitFullscreen) { /* Chrome, Safari & Opera */
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) { /* IE/Edge */
+                    document.msExitFullscreen();
+                }
+            };
+            
+            // Toggle fullscreen when the button is clicked
+            fullscreenToggle.addEventListener('click', () => {
+                if (!document.fullscreenElement && 
+                    !document.mozFullScreenElement && 
+                    !document.webkitFullscreenElement && 
+                    !document.msFullscreenElement) {
+                    enterFullscreen();
+                } else {
+                    exitFullscreen();
+                }
+            });
+            
+            // Automatically request fullscreen when the page loads
+            // Use a slight delay to ensure browser recognizes it as a user interaction
+            setTimeout(() => {
+                try {
+                    enterFullscreen();
+                } catch (e) {
+                    console.log('Fullscreen request failed: ', e);
+                    // Show an instruction to the user
+                    const instruction = document.createElement('div');
+                    instruction.className = 'fullscreen-instruction';
+                    instruction.textContent = 'Click the fullscreen button for better experience';
+                    document.body.appendChild(instruction);
+                    
+                    // Remove after 5 seconds
+                    setTimeout(() => {
+                        if (instruction.parentNode) {
+                            instruction.parentNode.removeChild(instruction);
+                        }
+                    }, 5000);
+                }
+            }, 1000);
+        });
+    </script>
 </body>
 </html>

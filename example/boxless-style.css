@@ -1,0 +1,222 @@
+/* Base styles */
+:root {
+  --rustic-turquoise: #573b20;    /* Deep brown */
+  --roasted-orange: #79553d;      /* Medium brown */
+  --burnt-sienna: #b38b6d;        /* Light brown */
+  --golden-amber: #c8a887;        /* Amber beige */
+  --light-amber: #d2b48c;         /* Classic tan */
+  --brownie-points: #3a2915;      /* Dark chocolate */
+  --sun-kiss: #e8d8bf;            /* Light cream beige */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  line-height: 1.6;
+  position: relative;
+}
+
+/* Background gallery simulation */
+.gallery-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -3;
+  overflow: hidden;
+}
+
+.gallery-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../images/Navagunjara Patachitra.png'); /* Changed from .jpg to .png */
+  background-size: cover;
+  background-position: center;
+  opacity: 0.3;
+  transform: scale(1.1);
+  z-index: -3;
+}
+
+/* Overlay to dim the background - updated to beige gradient */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, 
+    rgba(232, 216, 191, 0.85),  /* Beige (sun-kiss color) */
+    rgba(244, 238, 225, 0.8),   /* Light beige */
+    rgba(250, 247, 240, 0.75),  /* Very light beige */
+    rgba(255, 255, 255, 0.7)    /* White with opacity */
+  );
+  z-index: -2;
+}
+
+/* Container styles */
+.main-container {
+  padding: 20px;
+  position: relative;
+  z-index: 1;
+  max-width: 1600px;
+  margin: 2rem auto;
+}
+
+.quiz-area {
+  padding: 30px;
+  position: relative;
+  min-height: 75vh;
+  /* Add beige gradient to the main container */
+  background: linear-gradient(135deg, 
+    rgba(232, 216, 191, 0.95), /* Beige from sun-kiss var */
+    rgba(255, 255, 255, 0.95)  /* Fading to white */
+  );
+  border-radius: 16px;
+}
+
+/* Header/timer styles - Update to match new design */
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  color: var(--brownie-points);
+  font-weight: bold;
+  padding: 15px;
+  /* Remove background */
+  background: transparent;
+  font-size: 1.3rem;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: rgba(232, 216, 191, 0.3);
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  margin: 5px 0;
+  border: 1px solid rgba(232, 216, 191, 0.4);
+}
+
+.progress-fill {
+  position: absolute;
+  height: 100%;
+  background: linear-gradient(to right, #b38b6d, #d2b48c, #e8d8bf);
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.2);
+}
+
+.timer {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: var(--brownie-points);
+  padding: 12px 25px;
+  /* Remove container styling */
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* BOXLESS QUESTION STYLES - The key new component */
+.boxless-question-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20px 10px;
+  width: 90%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.boxless-image-container {
+  width: 100%;
+  max-width: 600px;
+  height: 400px;
+  position: relative;
+  margin: 0 auto 30px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.boxless-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  background-color: rgba(255, 255, 255, 0.85);
+}
+
+.boxless-question-text {
+  font-size: 2.2rem;
+  color: black; /* Changed from white to black for better readability */
+  text-shadow: /* Adjusted for black text */
+    0 0 10px rgba(255, 255, 255, 0.8),
+    0 0 20px rgba(255, 255, 255, 0.5);
+  font-weight: bold;
+  margin: 0 auto 40px;
+  max-width: 800px;
+  line-height: 1.4;
+  letter-spacing: 0.5px;
+}
+
+.boxless-options-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 25px;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.boxless-option-btn {
+  padding: 20px 35px;
+  font-size: 1.7rem;
+  color: #72270c;
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid rgba(114, 39, 12, 0.3);
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+}
+
+.boxless-option-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+  border-color: #d5a800;
+}
+
+.boxless-option-btn:active {
+  transform: translateY(-1px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .boxless-options-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .boxless-question-text {
+    font-size: 1.8rem;
+  }
+  
+  .boxless-image-container {
+    height: 300px;
+  }
+}

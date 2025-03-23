@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boxless Quiz Design Example</title>
+    <link rel="stylesheet" href="boxless-style.css">
+</head>
+<body>
+    <!-- Background gallery simulation -->
+    <div class="gallery-background">
+        <div class="gallery-img active"></div>
+    </div>
+    
+    <!-- Quiz content without boxes -->
+    <div class="main-container" style="display: flex; opacity: 1;">
+        <main class="quiz-area">
+            <div class="header-content">
+                <div class="question-progress">
+                    <h2>Question <span>3</span>/<span>10</span></h2>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 30%"></div>
+                    </div>
+                    <div class="progress-text">Progress</div>
+                </div>
+                <div class="timer">
+                    <span>Time: </span>
+                    <span>10</span>
+                    <span>s</span>
+                </div>
+            </div>
+            
+            <!-- Boxless question example -->
+            <div class="boxless-question-container">
+                <div class="boxless-image-container">
+                    <img src="../images/Navagunjara Patachitra.png" alt="Navagunjara"> <!-- Changed from .jpg to .png -->
+                </div>
+                
+                <h3 class="boxless-question-text">
+                    Which of the following animals is NOT a part of the Navagunjara?
+                </h3>
+                
+                <div class="boxless-options-grid">
+                    <button class="boxless-option-btn">Peacock</button>
+                    <button class="boxless-option-btn">Elephant</button>
+                    <button class="boxless-option-btn">Lion</button>
+                    <button class="boxless-option-btn">Snake</button>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
