@@ -3,7 +3,7 @@ class QuizGame {
         this.questions = [];
         this.currentQuestionIndex = 0;
         this.score = 0;
-        this.timeLeft = 10;
+        this.timeLeft = 20; // Changed from 10 to 20 seconds
         this.timer = null;
         this.unansweredCount = 0;
         this.wrongAnswers = [];
@@ -75,13 +75,13 @@ class QuizGame {
             this.updateElementText(element);
         });
         
-        // Update the quiz rules without mentioning the special puzzle
+        // Update the quiz rules to mention 20 seconds instead of 10
         const rulesElement = document.querySelector('.rules-header ul li:first-child');
         if (rulesElement) {
             if (this.currentLanguage === 'mr') {
-                rulesElement.textContent = 'प्रत्येक प्रश्नासाठी तुमच्याकडे 10 सेकंद आहेत';
+                rulesElement.textContent = 'प्रत्येक प्रश्नासाठी तुमच्याकडे 20 सेकंद आहेत';
             } else {
-                rulesElement.textContent = 'You have 10 seconds per question';
+                rulesElement.textContent = 'You have 20 seconds per question';
             }
         }
     }
@@ -306,8 +306,8 @@ class QuizGame {
                 },
                 image: "images/Hanuman Dancing Mask.png",
                 question: {
-                    en: "What is the main color traditionally used in Sahi Jata face masks?",
-                    mr: "साही जाता मुखवट्यांसाठी पारंपरिकरीत्या वापरला जाणारा मुख्य रंग कोणता आहे?"
+                    en: "What is the main color traditionally used in wooden masks?",
+                    mr: "लाकडी मुखवटा पारंपरिकरीत्या वापरला जाणारा मुख्य रंग कोणता आहे?"
                 },
                 options: {
                     en: ["Blue", "Red", "Yellow", "Green"],
@@ -435,7 +435,7 @@ class QuizGame {
                     mr: "जीवनवृक्षाला काय म्हणतात?"
                 },
                 options: {
-                    en: ["Banyan tree", "Mango tree", "Kalpavriksha, the wish-fulfilling tree", "Coconut tree"],
+                    en: ["Banyan tree", "Mango tree", "Kalpavriksha,the wish fulfilling tree", "Coconut tree"],
                     mr: ["वडाचे झाड", "आंब्याचे झाड", "कल्पवृक्ष, इच्छा पूर्ण करणारे झाड", "नारळाचे झाड"]
                 },
                 correctAnswer: 2
@@ -504,7 +504,7 @@ class QuizGame {
                 image: "images/Gond Art.png",
                 question: {
                     en: "What is the main theme of the Gond painting 'Alienated'?",
-                    mr: "गोंद चित्र 'अलिएनेटेड' चा मुख्य विषय काय आहे?"
+                    mr: "गोंड चित्र 'अलिएनेटेड' चा मुख्य विषय काय आहे?"
                 },
                 options: {
                     en: ["Celebrating city life", "Illegal Mining", "Sports and games", "Festivals and celebrations"],
@@ -521,7 +521,7 @@ class QuizGame {
                 image: "images/Gond Art.png",
                 question: {
                     en: "Which state is home to the Gond community?",
-                    mr: "गोंद समुदाय कोणत्या राज्यात राहतात?"
+                    mr: "गोंड समुदाय कोणत्या राज्यात राहतात?"
                 },
                 options: {
                     en: ["Rajasthan", "Madhya Pradesh", "Kerala", "Punjab"],
@@ -750,7 +750,8 @@ class QuizGame {
             });
         });
 
-        this.timeLeft = 10;
+        // Set timer to 20 seconds instead of 10
+        this.timeLeft = 20;
         this.updateTimerDisplay();
         if (this.timer) clearInterval(this.timer);
         this.timer = setInterval(() => this.updateTimer(), 1000);

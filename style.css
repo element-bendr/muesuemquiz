@@ -308,7 +308,12 @@ body::after {
   width: calc(100% - 220px);
 }
 
-/* Add decorative cultural pattern border to quiz area */
+/* 
+ * DECORATIVE BORDERS - Commented out as requested
+ * These can be uncommented in the future if borders are needed again
+ */
+
+/*
 .quiz-area::before {
   content: '';
   position: absolute;
@@ -317,11 +322,18 @@ body::after {
   width: 100%;
   height: 100%;
   border: 12px solid transparent;
-  border-image: url('images/border-pattern.png') 30 round;
+  border-image: url('images/border-pattern.png') 12 round;
   pointer-events: none;
   opacity: 0.7;
   z-index: 0;
 }
+*/
+
+/*
+.quiz-area::after {
+  display: none;
+}
+*/
 
 /* Header and progress - Remove background and adjust alignment */
 .header-content {
